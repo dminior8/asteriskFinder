@@ -6,10 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 public class JsonService {
 
@@ -28,6 +25,9 @@ public class JsonService {
     }
 
     public JsonElement isValidJsonFile(String fileName) {
+        if(fileName.isEmpty()){
+            return null;
+        }
         try (BufferedReader reader = new BufferedReader(new FileReader(getFilePath(fileName)))) {
             StringBuilder subString = new StringBuilder();
 
@@ -37,10 +37,13 @@ public class JsonService {
             String content = subString.toString();
             JsonParser parser = new JsonParser();
 
+            if(content.isEmpty()){
+                throw new JsonSyntaxException("JSON content is empty");
+            }
             return parser.parse(content);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (com.google.gson.JsonSyntaxException e) { //Jeśli zła składnia
+        } catch (com.google.gson.JsonSyntaxException e) { //Jeśli zła składnia lub brak wartości
             e.printStackTrace();
         }
         return null;

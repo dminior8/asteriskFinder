@@ -29,16 +29,16 @@ public class JsonController implements Initializable {
         checkButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent actionEvent) {
+                resultLabel.setVisible(false);
                 JsonElement jsonElement = jsonService.isValidJsonFile(fileNameText.getText());
                 if(jsonElement != null) {
                     instructionLabel.setText("Name correct!");
                     resultLabel.setVisible(true);
-                    resultLabel.setText("Hello inside JSON!");
                 }else{
-                    if(instructionLabel.getText().equals("Wrong name. Try again!")){
+                    if(instructionLabel.getText().equals("Wrong file. Try again!")){
                         instructionLabel.setText("Still wrong. Try again!");
                     }else{
-                        instructionLabel.setText("Wrong name. Try again!");
+                        instructionLabel.setText("Wrong file. Try again!");
                     }
                 }
                 String result = new String(jsonService.checkForValue(jsonElement, "Resource", "*"));

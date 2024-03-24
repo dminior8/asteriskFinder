@@ -76,14 +76,11 @@ public class JsonService {
         }
         return "";
     }
+    public boolean isAsterisk(String value){
+        if(value.equals("*")){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
-//if(arrayJsonElement.isJsonObject() ){
-//nestedValue = new StringBuilder(
-//        checkForValue(arrayJsonElement.getAsJsonObject(), key, value));
-//        }else if(arrayJsonElement.isJsonArray()){
-//nestedValue = new StringBuilder(
-//        checkForValue(arrayJsonElement.getAsJsonArray(), key, value));
-//        }
-//        if(nestedValue.toString().equals("null")){
-//        return nestedValue.toString();
-//                }

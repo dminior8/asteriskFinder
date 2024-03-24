@@ -40,15 +40,14 @@ public class JsonController implements Initializable {
                     }else{
                         instructionLabel.setText("Wrong name. Try again!");
                     }
-
                 }
                 String result = new String(jsonService.checkForValue(jsonElement, "Resource", "*"));
                 System.out.println("Result: " + result);
 
-                if(result.equals("*")){
-                    resultLabel.setText("Asterisk is inside Resource file!");
+                if(jsonService.isAsterisk(result)){
+                    resultLabel.setText("TRUE! No asterisk inside JSON file.");
                 }else{
-                    resultLabel.setText("No asterisk inside JSON file.");
+                    resultLabel.setText("FALSE! Asterisk is inside Resource file!");
                 }
             }
         });

@@ -35,7 +35,12 @@ public class JsonController implements Initializable {
                     resultLabel.setVisible(true);
                     resultLabel.setText("Hello inside JSON!");
                 }else{
-                    instructionLabel.setText("Wrong name. Try again!");
+                    if(instructionLabel.getText().equals("Wrong name. Try again!")){
+                        instructionLabel.setText("Still wrong. Try again!");
+                    }else{
+                        instructionLabel.setText("Wrong name. Try again!");
+                    }
+
                 }
                 String result = new String(jsonService.checkForValue(jsonElement, "Resource", "*"));
                 System.out.println("Result: " + result);

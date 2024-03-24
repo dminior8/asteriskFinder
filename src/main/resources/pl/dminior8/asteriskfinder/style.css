@@ -1,0 +1,17 @@
+.root {
+    -fx-font-family: "Calibri";
+    -fx-effect: innershadow(gaussian, #eaeaea, 10, 0, 5, 5); /* cień */
+    -fx-background-color: linear-gradient(to top, #fffbf2, #fff6e6);
+    -fx-text-fill: #FFFFFF;
+}
+.status-label {
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+    -fx-padding: 20px 0 0 0;
+}
+.instruction-label{
+    -fx-font-size:12px;
+}
+.result-label{
+    -fx-folt-size:12px;
+}

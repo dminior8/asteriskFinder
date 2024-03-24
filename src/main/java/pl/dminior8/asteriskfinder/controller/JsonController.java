@@ -22,19 +22,28 @@ public class JsonController implements Initializable {
     @FXML
     private TextField fileNameText;
 
+    JsonService jsonService = new JsonService();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         resultLabel.setVisible(false);
         checkButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent actionEvent) {
-                JsonElement jsonElement = JsonService.isValidJsonFile(fileNameText.getText());
+                JsonElement jsonElement = jsonService.isValidJsonFile(fileNameText.getText());
                 if(jsonElement != null) {
                     instructionLabel.setText("Name correct!");
                     resultLabel.setVisible(true);
                     resultLabel.setText("Hello inside JSON!");
                 }else{
                     instructionLabel.setText("Wrong name. Try again!");
+                }
+                String result = new String(jsonService.checkForValue(jsonElement, "Resource", "*"));
+                System.out.println("Result: " + result);
+
+                if(result.equals("*")){
+                    resultLabel.setText("Asterisk is inside Resource file!");
+                }else{
+                    resultLabel.setText("No asterisk inside JSON file.");
                 }
             }
         });

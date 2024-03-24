@@ -14,8 +14,9 @@ public class JsonService {
         return false;
     }
     public static String getFilePath(String fileName) {
-        StringBuilder extension = null;
+        StringBuilder extension = new StringBuilder("");
         StringBuilder newFileName = new StringBuilder(fileName);
+
         if(!fileName.toLowerCase().endsWith(".json")){
             int dotIndex = fileName.indexOf('.');
             if(dotIndex != -1){

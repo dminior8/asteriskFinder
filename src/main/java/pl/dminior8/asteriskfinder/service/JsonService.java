@@ -65,8 +65,8 @@ public class JsonService {
                     nestedValue = new StringBuilder(checkForValue(jsonElementNew, key, value));
                 }else if(jsonElementNew.isJsonArray()){ //przypadek gdy tablicą: []
                     for (JsonElement element : jsonElementNew.getAsJsonArray()) {
-                        jsonObject = element.getAsJsonObject();
-                        nestedValue = new StringBuilder(checkForValue(jsonObject, key, value));
+                        JsonObject jsonObjectNew = element.getAsJsonObject();
+                        nestedValue = new StringBuilder(checkForValue(jsonObjectNew, key, value));
                     }
                 }
                 if(!nestedValue.toString().equals("")){

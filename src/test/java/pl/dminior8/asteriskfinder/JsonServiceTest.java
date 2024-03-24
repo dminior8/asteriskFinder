@@ -1,13 +1,11 @@
 package pl.dminior8.asteriskfinder;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import pl.dminior8.asteriskfinder.service.JsonService;
 
@@ -26,9 +24,12 @@ public class JsonServiceTest {
     @Mock
     private BufferedReader bufferedReader;
     @Mock
-    private JsonService jsonService;
+    private JsonService jsonServiceMock;
     @Mock
-    private JsonParser jsonParser;
+    private JsonParser jsonParserMock;
+
+    private JsonService jsonService = new JsonService();
+    private JsonParser jsonParser = new JsonParser();
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -37,16 +38,16 @@ public class JsonServiceTest {
     @Test
     public void shouldGetFilePath() {
         String expectedFilePath = "src/main/resources/pl/dminior8/asteriskfinder/example.json";
-        when(jsonService.getFilePath("example")).thenReturn(expectedFilePath);
-        when(jsonService.getFilePath("example.jso")).thenReturn("example.jso");
-        when(jsonService.getFilePath("example.json")).thenReturn(expectedFilePath);
-        when(jsonService.getFilePath("")).thenReturn(".json");
+        when(jsonServiceMock.getFilePath("example")).thenReturn(expectedFilePath);
+        when(jsonServiceMock.getFilePath("example.jso")).thenReturn("example.jso");
+        when(jsonServiceMock.getFilePath("example.json")).thenReturn(expectedFilePath);
+        when(jsonServiceMock.getFilePath("")).thenReturn(".json");
 
         assertAll(
-                ()->assertEquals(expectedFilePath, jsonService.getFilePath("example")),
-                ()->assertEquals("example.jso", jsonService.getFilePath("example.jso")),
-                ()->assertEquals(expectedFilePath, jsonService.getFilePath("example.json")),
-                ()->assertEquals(".json", jsonService.getFilePath(""))
+                ()->assertEquals(expectedFilePath, jsonServiceMock.getFilePath("example")),
+                ()->assertEquals("example.jso", jsonServiceMock.getFilePath("example.jso")),
+                ()->assertEquals(expectedFilePath, jsonServiceMock.getFilePath("example.json")),
+                ()->assertEquals(".json", jsonServiceMock.getFilePath(""))
         );
     }
 
@@ -55,43 +56,35 @@ public class JsonServiceTest {
         String jsonString = "{\"key\": \"value\"}";
 
         when(bufferedReader.readLine()).thenReturn(jsonString).thenReturn(null);
-        when(jsonParser.parse(any(Reader.class))).thenReturn(new JsonObject());
+        when(jsonParserMock.parse(any(Reader.class))).thenReturn(new JsonObject());
 
-        JsonElement actualElement = jsonParser.parse(bufferedReader);
+        JsonElement actualElement = jsonParserMock.parse(bufferedReader);
 
         assertTrue(actualElement.isJsonObject());
     }
 
-
     @Test
     public void shouldCheckForValue() {
-        String jsonString = "{\"key\": \"expectedValue\"}";
-        JsonElement jsonElement = new JsonParser().parse(jsonString).getAsJsonObject();
-        String expectedValue = "value";
-        when(jsonService.checkForValue(jsonElement, "key", "value")).thenReturn(expectedValue);
-
-        when(jsonService.checkForValue(jsonElement,"wrongKey","value")).thenReturn("");
-
-        String correctActualValue = jsonService.checkForValue(jsonElement, "key", "value");
-        String wrongActualValue = jsonService.checkForValue(jsonElement, "wrongKey", "value");
-
-        assertAll(
-                ()->assertEquals(expectedValue, correctActualValue),
-                ()->assertEquals("", wrongActualValue)
-        );
-    }
-
-    @Test
-    public void shouldCheckForValueRecursively() {
-        String jsonString = "{\"outerKey\": {\"innerKey\": \"expectedValue\"}}";
-        JsonObject jsonObject = jsonParser.parse(jsonString).getAsJsonObject();
-
-        String key = "innerKey";
+        String[] jsonStrings = {
+                "{\"key\": \"expectedValue\"}",
+                "{\"nested\": {\"key\": \"expectedValue\"}}",
+                "{\"array\": [{\"key\": \"expectedValue\"}]}",
+                "{\"array\": [{\"key1\": \"value1\"}, {\"key\": \"expectedValue\"}]}",
+                "{\"otherKey\": \"otherValue\"}"
+        };
+        String key = "key";
         String value = "expectedValue";
 
-        String actualValue = jsonService.checkForValue(jsonObject, key, value);
-
-        assertEquals(value, actualValue);
+        int it=0;
+        for (String jsonString : jsonStrings) {
+            String actualValue = jsonService.checkForValue(new JsonParser().parse(jsonString), key, value);
+            if(it == 4){
+                assertEquals("", actualValue);
+            }else{
+                assertEquals(value, actualValue);
+            }
+            it++;
+        }
     }
 }
 

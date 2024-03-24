@@ -3,14 +3,14 @@
 AsteriskFinder is a JavaFX application designed to validate JSON files and check for the presence of the asterisk (*) character within the JSON content. 
 This application utilizes BootstrapFX and CSS stylesheet for styling. It also includes a set of unit tests for the `JsonService` class implemented using JUnit and mock tests using Mockito.
 
-### Features
+## Features
 
 - Validates JSON files for correct syntax.
 - Checks for the presence of the asterisk (*) character within JSON content.
 - JavaFX application with a graphical user interface.
 - Utilizes BootstrapFX for enhanced styling.
 
-### Installation
+## Installation
 
 To run the AsteriskFinder application, follow these steps:
 
@@ -83,11 +83,11 @@ This command will compile your project's source code, execute all unit tests in 
 - Gson: Library for JSON parsing and manipulation in accordance with the [AWS::IAM::Role Policy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-role-policy.html).
 
 
-### License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### Author
+## Author
 
-[Daniel Minior](https://github.com/dminior8)
+©2024 [Daniel Minior](https://github.com/dminior8)
 

@@ -17,7 +17,7 @@ To run the AsteriskFinder application, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/AsteriskFinder.git
+   git clone https://github.com/dminior8/AsteriskFinder.git
    ```
 
 2. Open the project in your preferred Java IDE (e.g., IntelliJ IDEA, Eclipse).
